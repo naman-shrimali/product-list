@@ -63,7 +63,7 @@
           <div class="swiper-pagination" slot="pagination"></div>
           </swiper> -->
           <v-card-title class="pr-1 ml-4 mr-4" >
-            <div class="">
+            <div >
               <span class=" title content pb-2 "><v-row><h3 color="text">{{product_Detail.product_Name}}</h3><v-spacer></v-spacer><span class=" title content" style="color:#008037;"> ₹{{product_Detail.product_Discounted_Price}}</span><p style="color:grey;"> / </p> <del style="color:grey;" class="">₹{{product_Detail.product_MRP}}</del></v-row></span>
               <v-divider ></v-divider>
               <span class=" title content"><v-row class="mt-1"><v-rating readonly mdall dense  v-model.number = 'product_Detail.product_Rating' color="#38b6ff" background-color="#008037" half-increments></v-rating><p style="font-size:14px;">({{product_Detail.product_Reviews_Number}})</p></v-row></span>
