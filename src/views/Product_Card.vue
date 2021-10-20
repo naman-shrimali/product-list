@@ -87,9 +87,80 @@
             </div>
           </v-card-title>
           <v-card-actions >
-            <v-btn large rounded depressed ref="buyNow" class="mx-auto btn" @click="snackbar = true; console_logs()" :disabled="false">BUY NOW</v-btn> 
-            <v-snackbar v-model="snackbar" :timeout="timeout" color="text">
-                {{ text }}
+            <!-- <v-btn
+                    color="primary"
+                    :href="twitterURL" target="_blank" rel="noopener noreferrer"
+                  >
+                    Keepf
+                  </v-btn>
+            <a
+                    :href="twitterURL" target="_blank" rel="noopener noreferrer"
+                  >
+                    Keept
+                  </a>
+            <v-btn
+                    color="primary"
+                   :href="twitterURL" target="_blank" rel="noopener noreferrer"
+                  >
+                    Keepl
+                  </v-btn> -->
+            <v-btn large rounded  class="mx-auto btn">BUY NOW</v-btn> 
+
+            <v-speed-dial
+      v-model="fab"
+      :top="top"
+      :bottom="bottom"
+      :right="right"
+      :left="left"
+      :direction="direction"
+      :open-on-hover="hover"
+      :transition="transition"
+    >
+      <template v-slot:activator>
+        <v-btn
+          v-model="fab"
+          color="blue darken-2"
+          dark
+          fab
+        >
+          <v-icon v-if="fab">
+            mdi-close
+          </v-icon>
+          <v-icon v-else>
+            mdi-account-circle
+          </v-icon>
+        </v-btn>
+      </template>
+      <v-btn
+        fab
+        dark
+        small
+        color="blue"
+        :href="facebookURL" target="_blank" rel="noopener noreferrer"
+      >
+        <v-icon>mdi-facebook</v-icon>
+      </v-btn>
+      <v-btn
+        fab
+        dark
+        small
+        color="light-blue"
+        :href="twitterURL" target="_blank" rel="noopener noreferrer"
+      >
+        <v-icon>mdi-twitter</v-icon>
+      </v-btn>
+      <v-btn
+        fab
+        dark
+        small
+        color="light-blue"
+        :href="whatsappURL" target="_blank" rel="noopener noreferrer"
+      >
+        <v-icon>mdi-linkedin</v-icon>
+      </v-btn>
+    </v-speed-dial>
+            <!-- <v-snackbar v-model="snackbar" :timeout="timeout" color="text">
+                {{ textSucess }}
                 <template v-slot:action="{ attrs }">
                   <v-btn
                     color="primary"
@@ -99,8 +170,16 @@
                   >
                     Close
                   </v-btn>
+                  <v-btn
+                    color="primary"
+                    text
+                    v-bind="attrs"
+                    href="https://github.com/"
+                  >
+                    Keep
+                  </v-btn>
                 </template>
-             </v-snackbar>
+             </v-snackbar> -->
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -142,13 +221,36 @@ export default {
       //       nextEl: '.swiper-button-next',
       //       prevEl: '.swiper-button-prev'
       //     },
-          snackbar: false,
-          text: 'Order Placed !!',
-          timeout: 4000,
+      snackbar: false,
+      textSucess: 'Order Placed !!',
+      timeout: 4000,
+      url: window.location.href,
+      text: 'Sharing you your gift of this diwali',
+      facebookURL: '',
+      twitterURL: '',
+      linkedinURL: '',
+      whatsappURL: '',
+      success: false,
+      /////////////////////////////////
+      direction: 'top',
+      fab: false,
+      fling: false,
+      hover: false,
+      tabs: null,
+      top: false,
+      right: true,
+      bottom: true,
+      left: false,
+      transition: 'slide-y-reverse-transition',
     }
   },
   computed: {
-
+    encodedURL() {
+      return encodeURIComponent(this.url);
+    },
+    encodedText() {
+      return encodeURIComponent(this.text);
+    }
   },
    methods: {
         console_logs() {
@@ -157,36 +259,63 @@ export default {
             // console.log(this.product_Detail.product_Description);
             console.log(this.product_Detail.product_Id);
             console.log(this.$route.query.page);
-            
+            console.log(this.$route.fullPath);
+            console.log(this.facebookURL);
+            console.log(this.twitterURL);
+            console.log(this.whatsappURL);
         },
         check_Availability() {
-          //let buynow = document.getElementById("buyNow");
+          // if(this.product_Detail.product_Availability==0)
+          // {
+          //   this.$refs.availabilityMessage.innerHTML= "emptied !!";
+          //   this.$refs.availabilityMessage.style.color="grey";
+          //   this.$refs.buyNow.disabled = true;
+          // }
+          // else if(this.product_Detail.product_Availability<=5)
+          // {
+          //   this.$refs.availabilityMessage.innerHTML="hurry up !!, less than 5 left";
+          //   this.$refs.availabilityMessage.style.color="red";
+          //   this.$refs.buyNow.disabled = false;
+          // }
+          // else {
+          //   this.$refs.availabilityMessage.innerHTML="Available";
+          //   this.$refs.buyNow.disabled = false;
+          // }
+          //  window.location.href = "https://github.com/";
 
-          if(this.product_Detail.product_Availability==0)
-          {
-            this.$refs.availabilityMessage.innerHTML= "emptied !!";
-            this.$refs.availabilityMessage.style.color="grey";
-            this.$refs.buyNow.disabled = true;
-          }
-          else if(this.product_Detail.product_Availability<=5)
-          {
-            this.$refs.availabilityMessage.innerHTML="hurry up !!, less than 5 left";
-            this.$refs.availabilityMessage.style.color="red";
-            this.$refs.buyNow.disabled = false;
-          }
-          else {
-            this.$refs.availabilityMessage.innerHTML="Available";
-            this.$refs.buyNow.disabled = false;
-          }
-        }
+        },
+        generateURLs() {
+      //if (event.target.checkValidity()) {
+        this.success = true;
+        this.facebookURL =  'http://www.facebook.com/sharer/sharer.php?u=' + this.encodedURL + '&title=' + this.encodedText;
+        this.twitterURL =  'https://twitter.com/intent/tweet?text=' + this.encodedText + '&url=' + this.encodedURL;
+        this.linkedinURL = 'http://www.linkedin.com/shareArticle?mini=true&url=' + this.encodedURL + '&title=' + this.encodedText;
+        this.whatsappURL = 'https://api.whatsapp.com/send/?phone&text='+ this.encodedText + ":" + this.encodedURL;
+      //}
+    }
     },
   updated() {
     console.log("Now,updated");
-    
+    this.console_logs();
   },
   mounted() {
-    this.check_Availability();
-  }
+    //this.check_Availability();
+    this.generateURLs();
+  },
+  watch: {
+      top (val) {
+        this.bottom = !val
+      },
+      right (val) {
+        this.left = !val
+      },
+      bottom (val) {
+        this.top = !val
+      },
+      left (val) {
+        this.right = !val
+      },
+    },
 }
 </script>
 
