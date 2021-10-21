@@ -110,7 +110,7 @@
                     </v-col>
                     <v-spacer></v-spacer>
                     <v-col class="share-icon">
-                        <!-- <v-speed-dial
+                        <v-speed-dial
                               v-model="fab"
                               :direction="direction"
                               :transition="transition"
@@ -159,7 +159,7 @@
                               >
                                 <v-icon>mdi-whatsapp</v-icon>
                               </v-btn>
-                        </v-speed-dial> -->
+                        </v-speed-dial>
                     </v-col>
                   </v-row>
             <!-- <v-snackbar v-model="snackbar" :timeout="timeout" color="text">
