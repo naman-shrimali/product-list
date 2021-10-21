@@ -3,8 +3,8 @@
     <v-layout class="v-dialog v-dialog--active v-dialog--fullscreen ">
       <nav>
     <Navbar class="navbar"></Navbar>
-    </nav >
-      <v-flex sm8 offset-sm2 md6 offset-md3 md4 offset-md4 mt-6 >
+      </nav >
+      <v-flex sm8 offset-sm2 md6 offset-md3 md4 offset-md4 mt-8 >
         <br>
         <v-card color="primary" class="card text">
           <!-- <swiper :options="swiperOption">
@@ -68,8 +68,8 @@
               <v-divider ></v-divider>
               <span class=" title content"><v-row class="mt-1"><v-rating readonly mdall dense  v-model.number = 'product_Detail.product_Rating' color="#38b6ff" background-color="#008037" half-increments></v-rating><p style="font-size:14px;">({{product_Detail.product_Reviews_Number}})</p></v-row></span>
               <v-divider></v-divider>
-              <span class=" content"><p ref="availabilityMessage">{{product_Detail.product_Availability}}</p></span>
-              <span class=" mt-2"><p id="desc">{{product_Detail.product_Description.substring(0,50)+'...'}}<v-icon class="mr-1" color="background" @click="overlay = !overlay">mdi-page-next-outline</v-icon></p>
+              <!-- <span class=" content"><p ref="availabilityMessage">{{product_Detail.product_Availability}}</p></span> -->
+              <span class=""><p id="desc">{{product_Detail.product_Description.substring(0,100)+'...'}}<v-icon class="mr-1" color="background" @click="overlay = !overlay">mdi-page-next-outline</v-icon></p>
               <v-overlay
                 :absolute="absolute"
                 :value="overlay"
@@ -104,61 +104,64 @@
                   >
                     Keepl
                   </v-btn> -->
-            <v-btn large rounded  class="mx-auto btn">BUY NOW</v-btn> 
-
-            <v-speed-dial
-      v-model="fab"
-      :top="top"
-      :bottom="bottom"
-      :right="right"
-      :left="left"
-      :direction="direction"
-      :open-on-hover="hover"
-      :transition="transition"
-    >
-      <template v-slot:activator>
-        <v-btn
-          v-model="fab"
-          color="blue darken-2"
-          dark
-          fab
-        >
-          <v-icon v-if="fab">
-            mdi-close
-          </v-icon>
-          <v-icon v-else>
-            mdi-account-circle
-          </v-icon>
-        </v-btn>
-      </template>
-      <v-btn
-        fab
-        dark
-        small
-        color="blue"
-        :href="facebookURL" target="_blank" rel="noopener noreferrer"
-      >
-        <v-icon>mdi-facebook</v-icon>
-      </v-btn>
-      <v-btn
-        fab
-        dark
-        small
-        color="light-blue"
-        :href="twitterURL" target="_blank" rel="noopener noreferrer"
-      >
-        <v-icon>mdi-twitter</v-icon>
-      </v-btn>
-      <v-btn
-        fab
-        dark
-        small
-        color="light-blue"
-        :href="whatsappURL" target="_blank" rel="noopener noreferrer"
-      >
-        <v-icon>mdi-linkedin</v-icon>
-      </v-btn>
-    </v-speed-dial>
+                  <v-row>
+                    <v-col class="pr-4">
+                        <v-btn large rounded class="mx-auto btn" :href="address">BUY NOW</v-btn> 
+                    </v-col>
+                    <v-spacer></v-spacer>
+                    <v-col class="share-icon">
+                        <v-speed-dial
+                              v-model="fab"
+                              :direction="direction"
+                              :transition="transition"
+                              class="share-icon"
+                            >
+                              <template v-slot:activator>
+                                <v-btn
+                                  v-model="fab"
+                                  color="blue darken-2"
+                                  dark
+                                  fab
+                                  class="ml-6"
+                                >
+                                  <v-icon v-if="fab">
+                                    mdi-close
+                                  </v-icon>
+                                  <v-icon v-else>
+                                    mdi-share-circle
+                                  </v-icon>
+                                </v-btn>
+                              </template>
+                              <v-btn
+                                fab
+                                dark
+                                small
+                                color="#4267B2"
+                                :href="facebookURL" target="_blank" rel="noopener noreferrer"
+                              >
+                                <v-icon>mdi-facebook</v-icon>
+                              </v-btn>
+                              <v-btn
+                                fab
+                                dark
+                                small
+                                color="light-blue"
+                                :href="twitterURL" target="_blank" rel="noopener noreferrer"
+                              >
+                                <v-icon>mdi-twitter</v-icon>
+                              </v-btn>
+                              <v-btn
+                                fab
+                                dark
+                                small
+                                color="light-green"
+                                :href="whatsappURL" target="_blank" rel="noopener noreferrer"
+                              >
+                                <v-icon>mdi-whatsapp</v-icon>
+                              </v-btn>
+                        </v-speed-dial>
+                    </v-col>
+                  </v-row>
             <!-- <v-snackbar v-model="snackbar" :timeout="timeout" color="text">
                 {{ textSucess }}
                 <template v-slot:action="{ attrs }">
@@ -225,22 +228,16 @@ export default {
       textSucess: 'Order Placed !!',
       timeout: 4000,
       url: window.location.href,
-      text: 'Sharing you your gift of this diwali',
+      text: 'Sharing with you your gift of this diwali',
       facebookURL: '',
       twitterURL: '',
       linkedinURL: '',
       whatsappURL: '',
       success: false,
+      address: 'https://github.com/',
       /////////////////////////////////
       direction: 'top',
       fab: false,
-      fling: false,
-      hover: false,
-      tabs: null,
-      top: false,
-      right: true,
-      bottom: true,
-      left: false,
       transition: 'slide-y-reverse-transition',
     }
   },
@@ -287,9 +284,10 @@ export default {
         generateURLs() {
       //if (event.target.checkValidity()) {
         this.success = true;
+        this.url=window.location.href;
         this.facebookURL =  'http://www.facebook.com/sharer/sharer.php?u=' + this.encodedURL + '&title=' + this.encodedText;
         this.twitterURL =  'https://twitter.com/intent/tweet?text=' + this.encodedText + '&url=' + this.encodedURL;
-        this.linkedinURL = 'http://www.linkedin.com/shareArticle?mini=true&url=' + this.encodedURL + '&title=' + this.encodedText;
+        //this.linkedinURL = 'http://www.linkedin.com/shareArticle?mini=true&url=' + this.encodedURL + '&title=' + this.encodedText;
         this.whatsappURL = 'https://api.whatsapp.com/send/?phone&text='+ this.encodedText + ":" + this.encodedURL;
       //}
     }
@@ -297,10 +295,11 @@ export default {
   updated() {
     console.log("Now,updated");
     this.console_logs();
+    this.generateURLs();
   },
   mounted() {
     //this.check_Availability();
-    this.generateURLs();
+    
   },
   watch: {
       top (val) {
@@ -348,7 +347,8 @@ export default {
   text-align: center;
 }
 #desc {
-  font-size: 12px;
+  font-size: 14px;
+  color: grey;
 }
 #desc-overlay {
   font-size: 16px;
@@ -360,5 +360,9 @@ export default {
 }
 .card {
   height: 90vh;
+}
+.share-icon{
+  padding: 0;
+  align-items: center;
 }
 </style>

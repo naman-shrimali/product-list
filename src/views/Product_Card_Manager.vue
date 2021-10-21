@@ -104,7 +104,7 @@ export default {
 #app {
   height: 100vh;
   overflow: hidden;
-  max-width: 550px;
+  
 }
 table {
   border: 1px solid black;

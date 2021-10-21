@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar sm8 offset-sm2 md6 offset-md3 md4 offset-md4 fixed >
+  <v-toolbar sm8 offset-sm2 md6 offset-md3 md4 offset-md4 flat fixed >
       <v-toolbar-title class="text-uppercase " @click= "$router.push({name: 'Home'})">
           <span class="font-weight-light green--text">Product</span>
           <span class="font-weight-dark blue--text">Tail</span>

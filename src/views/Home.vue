@@ -18,8 +18,8 @@
   display: flex;
   text-align: center;
   align-items: center;
-  max-width: 550px;
   height: 100vh;
+  
 }
 #start-btn {
   background-color:#d4a373;
