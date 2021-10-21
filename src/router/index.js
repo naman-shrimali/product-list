@@ -20,7 +20,7 @@ const routes = [
     props: true,
   },
   {
-    path: "/:catchAll(.*)",
+    path: "*",
     name: "notFound",
     component: () =>
       import(/* webpackChunkName: "NotFound" */
