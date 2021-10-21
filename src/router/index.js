@@ -16,7 +16,15 @@ const routes = [
   {
     path: '/product_card/:id',
     name: 'Product_Card',
-    component: Product_Card
+    component: Product_Card,
+    props: true,
+  },
+  {
+    path: "/:catchAll(.*)",
+    name: "notFound",
+    component: () =>
+      import(/* webpackChunkName: "NotFound" */
+      "../views/NotFound.vue")
   }
 ]
 
@@ -25,6 +33,7 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
 
 export default router
 

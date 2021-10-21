@@ -106,11 +106,11 @@
                   </v-btn> -->
                   <v-row>
                     <v-col class="pr-4">
-                        <v-btn large rounded class="mx-auto btn" :href="address">BUY NOW</v-btn> 
+                        <v-btn large rounded class="mx-auto btn" :href="product_Detail.product_Origin">BUY NOW</v-btn> 
                     </v-col>
                     <v-spacer></v-spacer>
                     <v-col class="share-icon">
-                        <v-speed-dial
+                        <!-- <v-speed-dial
                               v-model="fab"
                               :direction="direction"
                               :transition="transition"
@@ -159,7 +159,7 @@
                               >
                                 <v-icon>mdi-whatsapp</v-icon>
                               </v-btn>
-                        </v-speed-dial>
+                        </v-speed-dial> -->
                     </v-col>
                   </v-row>
             <!-- <v-snackbar v-model="snackbar" :timeout="timeout" color="text">
@@ -257,9 +257,10 @@ export default {
             console.log(this.product_Detail.product_Id);
             console.log(this.$route.query.page);
             console.log(this.$route.fullPath);
-            console.log(this.facebookURL);
-            console.log(this.twitterURL);
-            console.log(this.whatsappURL);
+            console.log(this.$router.currentRoute);
+            // console.log(this.facebookURL);
+            // console.log(this.twitterURL);
+            // console.log(this.whatsappURL);
         },
         check_Availability() {
           // if(this.product_Detail.product_Availability==0)
