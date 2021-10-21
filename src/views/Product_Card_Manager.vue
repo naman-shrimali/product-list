@@ -6,7 +6,7 @@
           <ProductCard :product_Detail="product_Detail"  class="product_card" ></ProductCard>
         </swiper-slide>
       </template>
-      <div v-else> Product Not Found </div>
+      <div v-else><h2> Product Not Found </h2></div>
     </swiper>
   </div>
 </template>
