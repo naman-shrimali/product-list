@@ -33,6 +33,7 @@ export default {
           direction: 'vertical',
            height: window.innerHeight,
           spaceBetween: 60,
+          speed: 800,
           grabcursor: true,
           pagination: {
             el: '.swiper-pagination',
@@ -53,6 +54,9 @@ export default {
       }
     }, 
     mounted() {
+      window.onresize = function() {
+      document.body.height = window.innerHeight;
+    }
       this.fetchproduct_Details();
     },
     updated() {

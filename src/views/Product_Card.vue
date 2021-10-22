@@ -2,9 +2,9 @@
   <div class="v-dialog__ title content v-dialog__ title content--active mainDiv" >
     <v-layout class="v-dialog v-dialog--active v-dialog--fullscreen ">
       <nav>
-    <Navbar class="navbar"></Navbar>
+    <Navbar class="navbar" :product_Detail="product_Detail"></Navbar>
       </nav >
-      <v-flex sm8 offset-sm2 md6 offset-md3 md4 offset-md4 mt-8 >
+      <v-flex sm8 offset-sm2 md6 offset-md3 md4 offset-md4 mt-6 >
         <br>
         <v-card color="primary" class="card text">
           <v-img
@@ -24,9 +24,35 @@
           </v-img>
           <v-card-title class="mt-2 ml-4 mr-4 card-details" >
             <div >
-              <span class=" title content"><v-row ><v-row><h3 color="text">{{product_Detail.product_Name}}</h3></v-row><v-spacer></v-spacer><v-row><span class=" title content" style="color:#008037;"> ₹{{product_Detail.product_Discounted_Price}}</span><p style="color:grey;"> / </p> <del style="color:grey;" class="">₹{{product_Detail.product_MRP}}</del></v-row></v-row></span>
+              <span class=" title content">
+                <v-row >
+                  <v-row class="ml-2 mr-2">
+                    <p class="section-1" color="text">{{product_Detail.product_Name.substring(0,15)}}</p>
+                  </v-row>
+                  <v-spacer></v-spacer>
+                  <v-row>
+                    <span class=" title " style="color:#008037;"><p class="section-1" > ₹{{product_Detail.product_Discounted_Price}}</p></span>
+                    <p style="color:grey;" class="section-1"> / </p> <del style="color:grey;" class="section-1">₹{{product_Detail.product_MRP}}</del>
+                  </v-row>
+                </v-row>
+              </span>
               <v-divider class="mt-2"></v-divider>
-              <span class=" title content"><v-row class="mt-1" ><v-col ><v-row width="15%" height="30px"><v-rating readonly mdall dense  v-model.number = 'product_Detail.product_Rating' color="#38b6ff" background-color="#008037" half-increments></v-rating><p style="font-size:14px;">({{product_Detail.product_Reviews_Number}})</p></v-row></v-col><v-spacer></v-spacer><v-col style="padding:0"  align="center" width="100%"><v-img :src="product_Detail.product_Image_URL_2" width="80px" height="40px" ></v-img></v-col></v-row></span>
+              <span class=" title content">
+                <v-row class="mt-1" >
+                  <v-col >
+                    <v-row width="15%" height="30px">
+                      <v-rating readonly mdall dense  v-model.number = 'product_Detail.product_Rating' color="#38b6ff" background-color="#008037" half-increments></v-rating>
+                      <p style="font-size:14px;">({{product_Detail.product_Reviews_Number}})</p>
+                    </v-row>
+                  </v-col>
+                  <v-spacer></v-spacer>
+                  <v-col style="padding:0"  align="center" width="100%">
+                    <a :href="product_Detail.product_Seller" target="_blank">
+                      <v-img :src="product_Detail.product_Image_URL_2" width="80px" height="40px" ></v-img>
+                    </a>
+                  </v-col>
+                </v-row>
+              </span>
               <v-divider></v-divider>
               <span class=""><p id="desc">{{product_Detail.product_Description.substring(0,100)+'...'}}<v-icon class="mr-1" color="background" @click="overlay = !overlay">mdi-page-next-outline</v-icon></p>
               <v-overlay
@@ -46,13 +72,10 @@
               </v-overlay></span>
             </div>
           </v-card-title>
-          <v-card-actions class="bottam-bar" >
+          <div class="bottam-bar ">
+          <v-card-actions  >
                   <v-row >
-                    <v-col class="pr-4">
-                        <v-btn large rounded class="mx-auto btn" :href="product_Detail.product_Origin" target="_blank">BUY NOW</v-btn> 
-                    </v-col>
-                    <v-spacer></v-spacer>
-                    <v-col class="share-icon">
+                    <v-col class="share-icon mt-2">
                         <v-speed-dial
                               v-model="fab"
                               :direction="direction"
@@ -67,6 +90,8 @@
                                   dark
                                   fab
                                   class="ml-6"
+                                  width="45px"
+                                  height="45px"
                                 >
                                   <v-icon v-if="fab">
                                     mdi-close
@@ -105,8 +130,13 @@
                               </v-btn>
                         </v-speed-dial>
                     </v-col>
+                    <v-spacer></v-spacer>
+                    <v-col class="pr-4 ">
+                        <v-btn large rounded class="mx-auto btn" :href="product_Detail.product_Origin" target="_blank">BUY NOW</v-btn> 
+                    </v-col>
                   </v-row>
           </v-card-actions>
+          </div>
         </v-card>
       </v-flex>
     </v-layout>  
@@ -184,9 +214,7 @@ export default {
 </script>
 
 <style>
-.content {
-  font-size: 15px;
-}
+
 .btn {
   position: relative;
   
@@ -217,6 +245,7 @@ export default {
 #desc {
   font-size: 14px;
   color: grey;
+  line-height: 2.2;
 }
 #desc-overlay {
   font-size: 16px;
@@ -227,39 +256,51 @@ export default {
   padding-top: 10px;
 }
 .card {
-  height: 90vh;
+  height: 100vh;
 }
 .card-details {
-  height: 30vh;
+  height: 40%;
 }
 .share-icon{
   padding: 0;
   align-items: center;
 }
 .bottam-bar {
-  height:12vh;
-  margin-bottom: 0;
+  height: 10%;
+}
+.section-1 {
+  font-size: 22px;
 }
 @media (max-width: 550px) {
   .mainDiv{
-    height: 90vh;
+    height: 100vh;
     overflow: hidden;
   }
   .content{
     font-size: 12px;
   }
   .img-size{
-    height: 30vh;
+    height: 40%;
   }
   .card-details {
-  height: 20vh;
-  }
-  h3 {
-    font-size: 15px;
+  height: 30%;
   }
   #desc {
-    font-size:10px;
+    font-size:14px;
+    line-height: 1.6;
+  }
+  .bottam-bar {
+    height: 10%;
   }
   
+}
+@media (max-width: 400px) {
+  #desc {
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  .card-details {
+    height: 30%;
+  }
 }
 </style>
