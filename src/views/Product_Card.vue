@@ -240,7 +240,7 @@ export default {
   height:12vh;
   margin-bottom: 0;
 }
-@media (max-width: 370px) {
+@media (max-width: 550px) {
   .mainDiv{
     height: 90vh;
     overflow: hidden;
