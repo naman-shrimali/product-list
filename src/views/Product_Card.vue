@@ -9,8 +9,8 @@
         <v-card color="primary" class="card text">
           <v-img
             contain
-            class="white--text"
-            height="45vh"
+            class="white--text img-size"
+            height="40vh"
             :src= "product_Detail.product_Image_URL"
             style="background-color:white"
           >
@@ -22,10 +22,10 @@
               </v-layout>
             </v-container>
           </v-img>
-          <v-card-title class="pr-1 ml-4 mr-4 card-details" >
+          <v-card-title class="mt-2 ml-4 mr-4 card-details" >
             <div >
-              <span class=" title content pb-2 "><v-row><h3 color="text">{{product_Detail.product_Name}}</h3><v-spacer></v-spacer><span class=" title content" style="color:#008037;"> ₹{{product_Detail.product_Discounted_Price}}</span><p style="color:grey;"> / </p> <del style="color:grey;" class="">₹{{product_Detail.product_MRP}}</del></v-row></span>
-              <v-divider ></v-divider>
+              <span class=" title content"><v-row ><v-row><h3 color="text">{{product_Detail.product_Name}}</h3></v-row><v-spacer></v-spacer><v-row><span class=" title content" style="color:#008037;"> ₹{{product_Detail.product_Discounted_Price}}</span><p style="color:grey;"> / </p> <del style="color:grey;" class="">₹{{product_Detail.product_MRP}}</del></v-row></v-row></span>
+              <v-divider class="mt-2"></v-divider>
               <span class=" title content"><v-row class="mt-1" ><v-col ><v-row width="15%" height="30px"><v-rating readonly mdall dense  v-model.number = 'product_Detail.product_Rating' color="#38b6ff" background-color="#008037" half-increments></v-rating><p style="font-size:14px;">({{product_Detail.product_Reviews_Number}})</p></v-row></v-col><v-spacer></v-spacer><v-col style="padding:0"  align="center" width="100%"><v-img :src="product_Detail.product_Image_URL_2" width="80px" height="40px" ></v-img></v-col></v-row></span>
               <v-divider></v-divider>
               <span class=""><p id="desc">{{product_Detail.product_Description.substring(0,100)+'...'}}<v-icon class="mr-1" color="background" @click="overlay = !overlay">mdi-page-next-outline</v-icon></p>
@@ -35,6 +35,7 @@
                 :opacity="opacity"
                 align="center"
                 justify="center"
+                color: dark
               >
                 <p id="desc-overlay">{{product_Detail.product_Description}}</p>
                 <v-btn
@@ -127,7 +128,7 @@ export default {
         arr: 0,
         overlay: false,
         absolute: true,
-        opacity: 1,
+        opacity: 0.8,
         snackbar: false,
         textSucess: 'Order Placed !!',
         timeout: 4000,
@@ -202,6 +203,9 @@ export default {
   margin: 0;
   padding: 0;
 }
+.img-size {
+  height: 40vh;
+}
 .off {
   color: #008037;
   border-radius: 50%;
@@ -233,7 +237,29 @@ export default {
   align-items: center;
 }
 .bottam-bar {
-  height:6vh;
+  height:12vh;
   margin-bottom: 0;
+}
+@media (max-width: 370px) {
+  .mainDiv{
+    height: 90vh;
+    overflow: hidden;
+  }
+  .content{
+    font-size: 12px;
+  }
+  .img-size{
+    height: 30vh;
+  }
+  .card-details {
+  height: 20vh;
+  }
+  h3 {
+    font-size: 15px;
+  }
+  #desc {
+    font-size:10px;
+  }
+  
 }
 </style>
