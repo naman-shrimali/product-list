@@ -2,7 +2,7 @@
 <div class="home-page">
   <v-flex color="primary">
       <h1>Go to Product Page....</h1>
-        <v-btn id="start-btn" @click= "$router.push({name: 'Product_Card',params:{id:'pr1'}})">Click Me</v-btn>
+        <v-btn id="start-btn" @click= "$router.push({name: 'Product_Card',params:{id:'pro1'}})">Click Me</v-btn>
   </v-flex>
   </div>
 </template>
