@@ -55,6 +55,7 @@ export default {
     }, 
     mounted() {
       window.onresize = function() {
+        console.log("changed device dimensions")
       document.body.height = window.innerHeight;
     }
       this.fetchproduct_Details();

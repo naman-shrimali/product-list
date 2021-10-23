@@ -2,7 +2,7 @@
   <div class="v-dialog__ title content v-dialog__ title content--active mainDiv" >
     <v-layout class="v-dialog v-dialog--active v-dialog--fullscreen ">
       <nav>
-    <Navbar class="navbar" :product_Detail="product_Detail"></Navbar>
+    <Navbar class="navbar"></Navbar>
       </nav >
       <v-flex sm8 offset-sm2 md6 offset-md3 md4 offset-md4 mt-6 >
         <br>
@@ -47,29 +47,91 @@
                   </v-col>
                   <v-spacer></v-spacer>
                   <v-col style="padding:0"  align="center" width="100%">
-                    <a :href="product_Detail.product_Seller" target="_blank">
+                    <a :href="product_Detail.product_Seller" target="_blank" rel="noopener noreferrer">
                       <v-img :src="product_Detail.product_Image_URL_2" width="80px" height="40px" ></v-img>
                     </a>
                   </v-col>
                 </v-row>
               </span>
               <v-divider></v-divider>
-              <span class=""><p id="desc">{{product_Detail.product_Description.substring(0,100)+'...'}}<v-icon class="mr-1" color="background" @click="overlay = !overlay">mdi-page-next-outline</v-icon></p>
-              <v-overlay
-                :absolute="absolute"
-                :value="overlay"
-                :opacity="opacity"
-                align="center"
-                justify="center"
-                color: dark
-              >
-                <p id="desc-overlay">{{product_Detail.product_Description}}</p>
-                <v-btn
-                  @click="overlay = false"
+              <span>
+                <template v-if = "product_Detail.product_Promocode">
+                  <v-row class="copy-text mt-1" align="center" >
+                    <v-btn depressed flat class="pl-2 pr-2" elevation="0">{{message_promo}}</v-btn>
+                    <v-btn
+                      fab
+                      dark
+                      small
+                      color="green"
+                      class="ml-2 "
+                      @click="promocode"
+                    >
+                      <v-icon>mdi-content-copy</v-icon>
+                    </v-btn>
+                  <!-- <v-alert
+                  v-model="successAlert"
+                  color="green accent-4"
+                  class="alert"
+                  dark
+
+                  dismissible
+                >Copied !
+                </v-alert> -->
+                <v-snackbar
+                  v-model="successAlert"
+                  :timeout="3000"
+                  
                 >
-                  Read Less
-                </v-btn>
-              </v-overlay></span>
+                  Copied
+                  <template v-slot:action="{ attrs }">
+                    <v-btn
+                      color="blue"
+                      text
+                      v-bind="attrs"
+                      @click="successAlert = false"
+                    >
+                      Close
+                    </v-btn>
+                  </template>
+                </v-snackbar>
+                <v-snackbar
+                  v-model="failedAlert"
+                  :timeout="3000"
+                  
+                >
+                  Unable to copy
+                  <template v-slot:action="{ attrs }">
+                    <v-btn
+                      color="blue"
+                      text
+                      v-bind="attrs"
+                      @click="failedAlert = false"
+                    >
+                      Close
+                    </v-btn>
+                  </template>
+                </v-snackbar>
+                </v-row>
+                </template>
+                <template v-else><span><v-spacer></v-spacer></span></template>
+              </span>
+              <span class=""><p id="desc">{{product_Detail.product_Description.substring(0,100)+'...'}}<v-icon class="mr-1" color="background" @click="overlay = !overlay">mdi-page-next-outline</v-icon></p>
+                  <v-overlay
+                      :absolute="absolute"
+                      :value="overlay"
+                      :opacity="opacity"
+                      align="center"
+                      justify="center"
+                      color: dark
+                  >
+                      <p id="desc-overlay">{{product_Detail.product_Description}}</p>
+                        <v-btn
+                          @click="overlay = false"
+                        >
+                          Read Less
+                        </v-btn>
+                  </v-overlay>
+              </span>
             </div>
           </v-card-title>
           <div class="bottam-bar ">
@@ -106,6 +168,7 @@
                                 dark
                                 small
                                 color="#4267B2"
+                                class="ml-6"
                                 :href="facebookURL" target="_blank" rel="noopener noreferrer"
                               >
                                 <v-icon>mdi-facebook</v-icon>
@@ -115,6 +178,7 @@
                                 dark
                                 small
                                 color="light-blue"
+                                class="ml-6"
                                 :href="twitterURL" target="_blank" rel="noopener noreferrer"
                               >
                                 <v-icon>mdi-twitter</v-icon>
@@ -124,6 +188,7 @@
                                 dark
                                 small
                                 color="light-green"
+                                class="ml-6"
                                 :href="whatsappURL" target="_blank" rel="noopener noreferrer"
                               >
                                 <v-icon>mdi-whatsapp</v-icon>
@@ -132,7 +197,7 @@
                     </v-col>
                     <v-spacer></v-spacer>
                     <v-col class="pr-4 ">
-                        <v-btn large rounded class="mx-auto btn" :href="product_Detail.product_Origin" target="_blank">BUY NOW</v-btn> 
+                        <v-btn large rounded class="mx-auto btn" :href="product_Detail.product_Origin" target="_blank" rel="noopener noreferrer">BUY NOW</v-btn> 
                     </v-col>
                   </v-row>
           </v-card-actions>
@@ -145,6 +210,11 @@
 
 <script>
 import Navbar from './Navbar.vue'
+import Vue from 'vue'
+import VueClipboard from 'vue-clipboard2'
+
+VueClipboard.config.autoSetContainer = true // add this line
+Vue.use(VueClipboard)
 
 export default {
     name: 'swiper-example-loop',
@@ -173,6 +243,9 @@ export default {
         direction: 'top',
         fab: false,
         transition: 'slide-y-reverse-transition',
+        message_promo: "Promocode Available",
+        failedAlert: false,
+        successAlert: false
       }
   },
   computed: {
@@ -203,13 +276,35 @@ export default {
         this.twitterURL =  'https://twitter.com/intent/tweet?text=' + this.encodedText + '&url=' + this.encodedURL;
         //this.linkedinURL = 'http://www.linkedin.com/shareArticle?mini=true&url=' + this.encodedURL + '&title=' + this.encodedText;
         this.whatsappURL = 'https://api.whatsapp.com/send/?phone&text='+ this.encodedText + ":" + this.encodedURL;
-    }
+        },
+        doCopy: function(message){
+        this.$copyText(message).then(() => {
+          this.successAlert = true;
+          //console.log(e)
+        }, function () {
+          this.failedAlert = true;
+          //console.log(e)
+        });
+        },
+        promocode() {
+            this.message_promo = this.product_Detail.product_Promocode;
+            this.doCopy(this.message_promo);
+        }
     },
   updated() {
     console.log("Now,updated");
     //this.console_logs();
     this.generateURLs();
+    setTimeout(() => {
+      this.successAlert = false
+    }, 3000),
+    setTimeout(() => {
+      this.failedAlert = false
+    }, 3000)
   },
+  created() {
+    
+  }
 }
 </script>
 
@@ -246,6 +341,7 @@ export default {
   font-size: 14px;
   color: grey;
   line-height: 2.2;
+  margin-top: 5vh;
 }
 #desc-overlay {
   font-size: 16px;
@@ -261,6 +357,14 @@ export default {
 .card-details {
   height: 40%;
 }
+.alert{
+  text-align: center;
+  padding-top:0;
+  height: auto;
+  margin-left: 12px;
+  position: relative;
+  z-index: 15;
+}
 .share-icon{
   padding: 0;
   align-items: center;
@@ -270,6 +374,25 @@ export default {
 }
 .section-1 {
   font-size: 22px;
+}
+/* .copy-text {
+	/* position: relative;
+	padding: 10px;
+	/* background: #fff; */
+	/* border: 1px solid #ddd;
+	border-radius: 10px; */ 
+	/* display: flex;
+}
+.copy-text input.text {
+	padding: 10px;
+	font-size: 18px;
+	color: #555;
+	border: none;
+	outline: none;
+} */ 
+.copy-icon {
+  background-color:blue;
+  color: white;
 }
 @media (max-width: 550px) {
   .mainDiv{
