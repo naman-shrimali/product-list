@@ -5,10 +5,10 @@
       </v-avatar>
       <v-spacer></v-spacer>
       <v-btn icon v-if="!$vuetify.theme.dark" @click="toggleTheme()">
-        <v-icon class="mr-1" color="blue-grey darken-4">mdi-lightbulb</v-icon>
+        <v-icon class="mr-1" color="blue-grey darken-4">mdi-brightness-4</v-icon>
       </v-btn>
       <v-btn icon v-if="$vuetify.theme.dark" @click="toggleTheme()">
-        <v-icon color="yellow darken-5">mdi-lightbulb-outline</v-icon>
+        <v-icon color="yellow darken-5">mdi-brightness-6</v-icon>
       </v-btn>
   </v-toolbar>
 </template>

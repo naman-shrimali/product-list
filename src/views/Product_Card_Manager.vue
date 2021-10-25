@@ -33,7 +33,7 @@ export default {
           direction: 'vertical',
            height: window.innerHeight,
           spaceBetween: 60,
-          speed: 800,
+          speed: 700,
           grabcursor: true,
           pagination: {
             el: '.swiper-pagination',

@@ -16,8 +16,10 @@
           >
             <v-container fill-height fluid color="primary">
               <v-layout fill-height>
-                <v-flex sm12 align-end flexbox>
-                  <div class="off" style="background-color:#b1eff0; position:fixed"><h2 class="discount">{{ product_Detail.product_Discount +"%"}}</h2></div>
+                <v-flex sm12 align-end flexbox >
+                  <div class="off" style="background-color:#b1eff0; position:fixed">
+                    <h3 class="discount">{{ product_Detail.product_Discount +"%"}}</h3>
+                  </div>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -38,15 +40,22 @@
               </span>
               <v-divider class="mt-2"></v-divider>
               <span class=" title content">
-                <v-row class="mt-1" >
-                  <v-col >
-                    <v-row width="15%" height="30px">
-                      <v-rating readonly mdall dense  v-model.number = 'product_Detail.product_Rating' color="#38b6ff" background-color="#008037" half-increments></v-rating>
-                      <p style="font-size:14px;">({{product_Detail.product_Reviews_Number}})</p>
+                <v-row class="mt-1 ml-2 mr-2 mb-1" justify="center" align="center" >
+                  <v-col style="padding:0;" cols="6">
+                    <span>
+                    <v-row >
+                      <v-col style="padding:0;">
+                        <v-rating readonly mdall dense size="18" class="mr-1" v-model.number = 'product_Detail.product_Rating' color="#38b6ff" background-color="#008037" half-increments></v-rating>
+                      </v-col>
+                      <v-col style="padding:0;" class="mt-1"><p class="review-number" align="center">({{product_Detail.product_Reviews_Number}})</p></v-col>
                     </v-row>
+                    <v-row v-if = "product_Detail.product_Promocode" class="copy-text  mb-2" align="center" >
+                      <v-btn depressed  class="pl-0 pr-0 mt-1" @click="promocode" ><h5>{{message_promo}}</h5></v-btn>
+                    </v-row>
+                    </span>
                   </v-col>
-                  <v-spacer></v-spacer>
-                  <v-col style="padding:0"  align="center" width="100%">
+                  <v-spacer cols="3"></v-spacer>
+                  <v-col style="padding:0;" align-self="end" align="center" width="100%" cols="3">
                     <a :href="product_Detail.product_Seller" target="_blank" rel="noopener noreferrer">
                       <v-img :src="product_Detail.product_Image_URL_2" width="80px" height="40px" ></v-img>
                     </a>
@@ -54,33 +63,12 @@
                 </v-row>
               </span>
               <v-divider></v-divider>
-              <span>
-                <template v-if = "product_Detail.product_Promocode">
-                  <v-row class="copy-text mt-1" align="center" >
-                    <v-btn depressed flat class="pl-2 pr-2" elevation="0">{{message_promo}}</v-btn>
-                    <v-btn
-                      fab
-                      dark
-                      small
-                      color="green"
-                      class="ml-2 "
-                      @click="promocode"
-                    >
-                      <v-icon>mdi-content-copy</v-icon>
-                    </v-btn>
-                  <!-- <v-alert
-                  v-model="successAlert"
-                  color="green accent-4"
-                  class="alert"
-                  dark
-
-                  dismissible
-                >Copied !
-                </v-alert> -->
                 <v-snackbar
                   v-model="successAlert"
                   :timeout="3000"
-                  
+                  absolute
+                  centered
+                  shaped
                 >
                   Copied
                   <template v-slot:action="{ attrs }">
@@ -90,11 +78,12 @@
                       v-bind="attrs"
                       @click="successAlert = false"
                     >
-                      Close
+                      <v-icon>mdi-close-circle</v-icon>
                     </v-btn>
                   </template>
                 </v-snackbar>
                 <v-snackbar
+                  
                   v-model="failedAlert"
                   :timeout="3000"
                   
@@ -107,15 +96,11 @@
                       v-bind="attrs"
                       @click="failedAlert = false"
                     >
-                      Close
+                     <v-icon>mdi-close-circle</v-icon>
                     </v-btn>
                   </template>
                 </v-snackbar>
-                </v-row>
-                </template>
-                <template v-else><span><v-spacer></v-spacer></span></template>
-              </span>
-              <span class=""><p id="desc">{{product_Detail.product_Description.substring(0,100)+'...'}}<v-icon class="mr-1" color="background" @click="overlay = !overlay">mdi-page-next-outline</v-icon></p>
+              <span><p id="desc">{{product_Detail.product_Description.substring(0,100)+'...'}}<v-icon class="mr-1" color="background" @click="overlay = !overlay">mdi-page-next-outline</v-icon></p>
                   <v-overlay
                       :absolute="absolute"
                       :value="overlay"
@@ -213,7 +198,7 @@ import Navbar from './Navbar.vue'
 import Vue from 'vue'
 import VueClipboard from 'vue-clipboard2'
 
-VueClipboard.config.autoSetContainer = true // add this line
+VueClipboard.config.autoSetContainer = true 
 Vue.use(VueClipboard)
 
 export default {
@@ -243,9 +228,9 @@ export default {
         direction: 'top',
         fab: false,
         transition: 'slide-y-reverse-transition',
-        message_promo: "Promocode Available",
+        message_promo: "Promocode",
         failedAlert: false,
-        successAlert: false
+        successAlert: false,
       }
   },
   computed: {
@@ -274,7 +259,6 @@ export default {
         this.url=window.location.href;
         this.facebookURL =  'http://www.facebook.com/sharer/sharer.php?u=' + this.encodedURL + '&title=' + this.encodedText;
         this.twitterURL =  'https://twitter.com/intent/tweet?text=' + this.encodedText + '&url=' + this.encodedURL;
-        //this.linkedinURL = 'http://www.linkedin.com/shareArticle?mini=true&url=' + this.encodedURL + '&title=' + this.encodedText;
         this.whatsappURL = 'https://api.whatsapp.com/send/?phone&text='+ this.encodedText + ":" + this.encodedURL;
         },
         doCopy: function(message){
@@ -342,11 +326,15 @@ export default {
   color: grey;
   line-height: 2.2;
   margin-top: 5vh;
+  text-overflow: ellipsis;
+    overflow: hidden;
 }
 #desc-overlay {
   font-size: 16px;
   margin: 10px;
   text-align: center;
+  text-overflow: ellipsis;
+    overflow: hidden;
 }
 .discount {
   padding-top: 10px;
@@ -356,6 +344,13 @@ export default {
 }
 .card-details {
   height: 40%;
+}
+.review-number {
+  font-size:12px;
+  margin:0; 
+  padding:0;
+  width: fit-content;
+  height: fit-content;
 }
 .alert{
   text-align: center;
@@ -374,6 +369,8 @@ export default {
 }
 .section-1 {
   font-size: 22px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 /* .copy-text {
 	/* position: relative;
