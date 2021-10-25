@@ -371,22 +371,7 @@ export default {
   font-size: 22px;
   text-overflow: ellipsis;
   overflow: hidden;
-}
-/* .copy-text {
-	/* position: relative;
-	padding: 10px;
-	/* background: #fff; */
-	/* border: 1px solid #ddd;
-	border-radius: 10px; */ 
-	/* display: flex;
-}
-.copy-text input.text {
-	padding: 10px;
-	font-size: 18px;
-	color: #555;
-	border: none;
-	outline: none;
-} */ 
+} 
 .copy-icon {
   background-color:blue;
   color: white;
