@@ -261,18 +261,7 @@ export default {
     }
   },
    methods: {
-        console_logs() {
-            //console.log(this.x[0]);
-            // console.log(this.product_Detail.product_Rating);
-            // console.log(this.product_Detail.product_Description);
-            //console.log(this.product_Detail.product_Id);
-            // console.log(this.$route.query.page);
-            // console.log(this.$route.fullPath);
-            // console.log(this.$router.currentRoute.params.id);
-            // console.log(this.facebookURL);
-            // console.log(this.twitterURL);
-            // console.log(this.whatsappURL);
-        },
+        
         generateURLs() {
         this.success = true;
         this.url=window.location.href;
