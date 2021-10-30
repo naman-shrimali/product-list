@@ -193,6 +193,7 @@
                                 dark
                                 small
                                 class="ml-6"
+                                id="shareBtn"
                                 @click="console_logs"
                               >
                                 <v-icon>mdi-web</v-icon>
@@ -201,7 +202,7 @@
                     </v-col>
                     <v-spacer></v-spacer>
                     <v-col class="pr-4 ">
-                        <v-btn large rounded class="mx-auto btn" :href="product_Detail.product_Origin" target="_blank" rel="noopener noreferrer">BUY NOW</v-btn> 
+                        <v-btn large rounded class="mx-auto btn" :href="product_Detail.product_Seller" target="_blank" rel="noopener noreferrer" >BUY NOW</v-btn> 
                     </v-col>
                   </v-row>
           </v-card-actions>
@@ -258,10 +259,22 @@ export default {
     },
     encodedText() {
       return encodeURIComponent(this.text);
-    }
+    },
   },
    methods: {
-        
+        console_logs() {
+            //console.log(this.x[0]);
+            // console.log(this.product_Detail.product_Rating);
+            // console.log(this.product_Detail.product_Description);
+            //console.log(this.product_Detail.product_Id);
+            // console.log(this.$route.query.page);
+            // console.log(this.$route.fullPath);
+            // console.log(this.$router.currentRoute.params.id);
+            // console.log(this.facebookURL);
+            // console.log(this.twitterURL);
+            // console.log(this.whatsappURL);
+            document.querySelector("#shareBtn").style.display = "block";
+        },
         generateURLs() {
         this.success = true;
         this.url=window.location.href;
@@ -388,6 +401,9 @@ export default {
 .copy-icon {
   background-color:blue;
   color: white;
+}
+#shareBtn {
+  display: none;
 }
 @media (max-width: 550px) {
   .mainDiv{
