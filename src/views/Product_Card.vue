@@ -83,10 +83,8 @@
                   </template>
                 </v-snackbar>
                 <v-snackbar
-                  
                   v-model="failedAlert"
                   :timeout="3000"
-                  
                 >
                   Unable to copy
                   <template v-slot:action="{ attrs }">
@@ -109,6 +107,18 @@
                       justify="center"
                       color: dark
                   >
+                    <div class="desc-close-btn">
+                      <v-btn
+                                fab
+                                dark
+                                small
+                                color="light-black"
+                                class="mr-2"
+                                @click="overlay = false"
+                              >
+                                <v-icon>mdi-close</v-icon>
+                      </v-btn>
+                    </div>
                       <p id="desc-overlay">{{product_Detail.product_Description}}</p>
                         <v-btn
                           @click="overlay = false"
@@ -178,6 +188,16 @@
                               >
                                 <v-icon>mdi-whatsapp</v-icon>
                               </v-btn>
+                              <v-btn
+                                fab
+                                dark
+                                small
+                                class="ml-6"
+                                id="shareBtn"
+                                @click="console_logs"
+                              >
+                                <v-icon>mdi-web</v-icon>
+                              </v-btn>
                         </v-speed-dial>
                     </v-col>
                     <v-spacer></v-spacer>
@@ -218,7 +238,7 @@ export default {
         textSucess: 'Order Placed !!',
         timeout: 4000,
         url: window.location.href,
-        text: 'Sharing with you your gift of this diwali: ',
+        text: 'Sending you your Diwali gift',
         facebookURL: '',
         twitterURL: '',
         linkedinURL: '',
@@ -239,17 +259,41 @@ export default {
     },
     encodedText() {
       return encodeURIComponent(this.text);
-    }
+    },
   },
    methods: {
+              webShareAPI(header, description, link) {
+              navigator
+                .share({
+                  title: header,
+                  text: description,
+                  url: link
+                })
+                .then(() => console.log("Successful share"))
+                .catch((error) => console.log("Error sharing", error));
+            },
         console_logs() {
             //console.log(this.x[0]);
             // console.log(this.product_Detail.product_Rating);
             // console.log(this.product_Detail.product_Description);
             console.log(this.product_Detail.product_Id);
-            console.log(this.$route.query.page);
-            console.log(this.$route.fullPath);
-            console.log(this.$router.currentRoute.params.id);
+            console.log(document.querySelector('#shareBtn'));
+            const btn = document.querySelector('#shareBtn');
+                        if (navigator.share) {
+              // Show button if it supports webShareAPI
+              btn.style.display = "block";
+              btn.addEventListener("click", () =>
+                this.webShareAPI("header", "description", "www.url.com")
+              );
+            } else {
+              // Hide button if it supports webShareAPI
+              btn.style.display = "none";
+              console.error("Your Browser doesn't support Web Share API");
+              //document.write("Your Browser doesn't support Web Share API");
+            }
+            // console.log(this.$route.query.page);
+            // console.log(this.$route.fullPath);
+            // console.log(this.$router.currentRoute.params.id);
             // console.log(this.facebookURL);
             // console.log(this.twitterURL);
             // console.log(this.whatsappURL);
@@ -261,6 +305,7 @@ export default {
         this.twitterURL =  'https://twitter.com/intent/tweet?text=' + this.encodedText + '&url=' + this.encodedURL;
         this.whatsappURL = 'https://api.whatsapp.com/send/?phone&text='+ this.encodedText + ":" + this.encodedURL;
         },
+        
         doCopy: function(message){
         this.$copyText(message).then(() => {
           this.successAlert = true;
@@ -335,6 +380,11 @@ export default {
   text-align: center;
   text-overflow: ellipsis;
     overflow: hidden;
+}
+.desc-close-btn {
+  display: flex;
+  justify-content: end;
+
 }
 .discount {
   padding-top: 10px;
