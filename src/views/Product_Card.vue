@@ -193,7 +193,6 @@
                                 dark
                                 small
                                 class="ml-6"
-                                id="shareBtn"
                                 @click="console_logs"
                               >
                                 <v-icon>mdi-web</v-icon>
@@ -259,38 +258,14 @@ export default {
     },
     encodedText() {
       return encodeURIComponent(this.text);
-    },
+    }
   },
    methods: {
-              webShareAPI(header, description, link) {
-              navigator
-                .share({
-                  title: header,
-                  text: description,
-                  url: link
-                })
-                .then(() => console.log("Successful share"))
-                .catch((error) => console.log("Error sharing", error));
-            },
         console_logs() {
             //console.log(this.x[0]);
             // console.log(this.product_Detail.product_Rating);
             // console.log(this.product_Detail.product_Description);
-            console.log(this.product_Detail.product_Id);
-            console.log(document.querySelector('#shareBtn'));
-            const btn = document.querySelector('#shareBtn');
-                        if (navigator.share) {
-              // Show button if it supports webShareAPI
-              btn.style.display = "block";
-              btn.addEventListener("click", () =>
-                this.webShareAPI("header", "description", "www.url.com")
-              );
-            } else {
-              // Hide button if it supports webShareAPI
-              btn.style.display = "none";
-              console.error("Your Browser doesn't support Web Share API");
-              //document.write("Your Browser doesn't support Web Share API");
-            }
+            //console.log(this.product_Detail.product_Id);
             // console.log(this.$route.query.page);
             // console.log(this.$route.fullPath);
             // console.log(this.$router.currentRoute.params.id);
@@ -305,7 +280,6 @@ export default {
         this.twitterURL =  'https://twitter.com/intent/tweet?text=' + this.encodedText + '&url=' + this.encodedURL;
         this.whatsappURL = 'https://api.whatsapp.com/send/?phone&text='+ this.encodedText + ":" + this.encodedURL;
         },
-        
         doCopy: function(message){
         this.$copyText(message).then(() => {
           this.successAlert = true;
